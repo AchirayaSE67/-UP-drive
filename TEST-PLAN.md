@@ -13,10 +13,10 @@ CRUD suite.
 
 | ID | Action | Expected result |
 | --- | --- | --- |
-| TC-01 | Create a ride request with valid places and coordinates | HTTP 201; the response contains the new ride ID and passenger ID |
-| TC-02 | Read the ride created in TC-01 | HTTP 200; stored values match the created ride |
-| TC-03 | Cancel that ride | HTTP 200; a subsequent read shows status cancelled |
-| TC-04 | Try to create a ride without an origin | HTTP 400; no ride is created |
+| TC-01 | Submit a valid ride from the passenger page; map coordinates are fixed test fixtures | UI confirms creation; HTTP 201; response contains the new ride ID and passenger ID |
+| TC-02 | Reopen the passenger page and read the ride created in TC-01 | UI shows the saved route; HTTP 200; stored values match the created ride |
+| TC-03 | Cancel that ride from the passenger page | UI confirms cancellation; HTTP 200; a subsequent read shows status cancelled |
+| TC-04 | Try to create a ride with an empty origin | Browser required-field validation blocks submission; a direct API check returns HTTP 400 |
 
 TC-01 through TC-03 use the same ride. TC-03 leaves the ride in a cancelled
 state. If an earlier case fails, teardown attempts to cancel any ride created
@@ -32,8 +32,11 @@ by this run. Existing rides belonging to the account are left alone.
 5. Start the application with npm start.
 6. In another terminal run npm run test:e2e.
 
-The runner writes a JSON summary to test-results/ride-request-results.json.
-The test-results/ directory is ignored by Git.
+The runner writes a JSON summary to test-results/ride-request-results.json
+and records one Playwright browser video per case in test-results/videos/TC-01.webm
+through TC-04.webm. The browser opens with the test account session already
+loaded, so credentials do not appear in the videos. The test-results/ directory
+is ignored by Git.
 
 ## Database note
 
